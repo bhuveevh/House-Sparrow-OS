@@ -1,13 +1,15 @@
+/* --- Global Styles --- */
 body, html {
     margin: 0;
     padding: 0;
     width: 100%;
     height: 100%;
     overflow: hidden;
-    font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     user-select: none;
 }
 
+/* --- Desktop and Icons --- */
 #desktop {
     width: 100%;
     height: 100%;
@@ -35,11 +37,7 @@ body, html {
     border-radius: 8px;
     transition: background-color 0.2s;
 }
-
-.icon:hover {
-    background-color: rgba(255, 255, 255, 0.25);
-}
-
+.icon:hover { background-color: rgba(255, 255, 255, 0.2); }
 .icon img {
     width: 60px;
     height: 60px;
@@ -47,19 +45,16 @@ body, html {
     box-shadow: 0 4px 8px rgba(0,0,0,0.3);
     transition: transform 0.2s;
 }
-
-.icon:hover img {
-    transform: scale(1.1);
-}
-
+.icon:hover img { transform: scale(1.1); }
 .icon p {
     color: white;
     font-size: 14px;
     margin-top: 5px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
     word-wrap: break-word;
 }
 
+/* --- Dock --- */
 #dock {
     position: fixed;
     bottom: 15px;
@@ -70,120 +65,121 @@ body, html {
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 20px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-    animation: gradient-wave 8s linear infinite;
-    background-size: 400% 100%;
-    background-image: linear-gradient(90deg, #ffda79, #ffabe7, #9effa8, #a7dfff, #ffda79);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    z-index: 10000;
 }
-
 .gradient-text {
-    font-size: 1.6vw;
+    font-size: 24px;
     font-weight: 500;
     color: #fff;
     cursor: pointer;
     text-shadow: 1px 1px 5px rgba(0,0,0,0.4);
 }
 
-@keyframes gradient-wave {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 100% 50%; }
+/* --- Window Management --- */
+#window-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Allows clicking through to the desktop */
 }
 
 .modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #f0f0f0;
+    position: absolute;
+    background-color: #f1f1f1;
     box-shadow: 0 10px 30px rgba(0,0,0,0.4);
     border-radius: 12px;
-    z-index: 1001;
+    border: 1px solid #c0c0c0;
     display: flex;
     flex-direction: column;
-    border: 1px solid #ccc;
-    min-width: 300px;
+    min-width: 350px;
+    min-height: 200px;
+    pointer-events: all; /* Individual windows are clickable */
+    transition: width 0.2s ease, height 0.2s ease, top 0.2s ease, left 0.2s ease;
 }
-
 .modal.hidden { display: none; }
+.modal.focused { border-color: #007aff; box-shadow: 0 10px 40px rgba(0, 123, 255, 0.5); }
 
-#popup-modal {
-    width: 85%;
-    height: 90%;
+.app-window {
+    width: 60vw;
+    height: 70vh;
     resize: both;
     overflow: hidden;
-}
-
-.modal.maximized {
-    width: 100vw;
-    height: 100vh;
-    top: 0 !important;
-    left: 0 !important;
-    border-radius: 0;
-    transform: none !important;
-    resize: none;
 }
 
 #settings-modal {
     width: 350px;
     resize: none;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .popup-header {
-    background-color: #e0e0e0;
+    background-color: #e8e8e8;
     padding: 8px 12px;
     border-bottom: 1px solid #ccc;
-    border-radius: 12px 12px 0 0;
+    border-radius: 11px 11px 0 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
     cursor: move;
     position: relative;
+    flex-shrink: 0;
 }
+.modal.focused .popup-header { background-color: #e1e1e1; }
+
 .popup-header > span { font-weight: bold; color: #333; }
-.window-controls { display: flex; gap: 6px; }
+.window-controls { display: flex; align-items: center; gap: 8px; }
 .control-btn {
-    width: 15px; height: 15px; border-radius: 50%;
-    border: none; cursor: pointer; font-size: 10px;
-    display: flex; align-items: center; justify-content: center;
-    color: #555; font-weight: bold; line-height: 1;
+    width: 12px; height: 12px; border-radius: 50%;
+    border: none; cursor: pointer;
+    font-size: 10px; display: flex; align-items: center; justify-content: center;
+    color: #555; line-height: 0;
 }
-#close-popup, #close-settings { background: #ff5f57; }
-#minimize-btn { background: #ffbd2e; }
-#maximize-btn { background: #27c93f; }
+.control-btn:hover { filter: brightness(0.9); }
+.close-btn, #close-settings { background: #ff5f57; }
+.minimize-btn { background: #ffbd2e; }
+.maximize-btn { background: #27c93f; }
 
-.popup-content { flex-grow: 1; background: #fff; }
-#popup-iframe { width: 100%; height: 100%; border: none; }
+.popup-content { flex-grow: 1; background: #fff; border-radius: 0 0 11px 11px; }
+.popup-iframe { width: 100%; height: 100%; border: none; }
 
+.loading-bar {
+    position: absolute; bottom: 0px; left: 0; height: 2px; background-color: #007aff;
+    width: 0%; display: none; border-radius: 0 0 0 2px;
+}
+.loading-bar.loading { display: block; animation: loading-animation 1.5s ease-out forwards; }
+@keyframes loading-animation {
+    0% { width: 0%; } 100% { width: 100%; opacity: 0; }
+}
+
+#tiling-preview {
+    position: fixed;
+    display: none;
+    background-color: rgba(0, 123, 255, 0.2);
+    border: 2px dashed rgba(0, 123, 255, 0.8);
+    border-radius: 8px;
+    z-index: 10001; /* Must be above windows */
+    transition: all 0.1s ease-out;
+    pointer-events: none;
+}
+
+/* --- Settings Content --- */
 .settings-content { padding: 20px; background: #fff; border-radius: 0 0 12px 12px; }
 .settings-content input, .settings-content button, .settings-content label {
-    width: 100%; padding: 8px; margin: 5px 0;
-    box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px;
-    display: block;
+    width: 100%; padding: 8px; margin: 5px 0; box-sizing: border-box;
+    border: 1px solid #ccc; border-radius: 4px; display: block;
 }
 .settings-content label { border: none; padding: 0; margin-bottom: 5px; }
 .settings-content button {
     cursor: pointer; background-color: #007bff; color: white; border: none; margin-top: 15px;
 }
-.settings-content hr { margin: 20px 0; border: none; border-top: 1px solid #eee; }
-
-#wallpaper-options {
-    display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px;
-}
+#wallpaper-options { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
 .wallpaper-thumb {
     width: 60px; height: 35px; border: 2px solid transparent; border-radius: 4px;
     cursor: pointer; background-size: cover; background-position: center;
 }
-.wallpaper-thumb.selected { border-color: #007bff; }
-
-.loading-bar {
-    position: absolute; bottom: -1px; left: 0; height: 3px;
-    background-color: #007bff; width: 0%; display: none;
-}
-.loading-bar.loading {
-    display: block; animation: loading-animation 1.5s ease-out forwards;
-}
-@keyframes loading-animation {
-    0% { width: 0%; opacity: 1; }
-    80% { width: 95%; opacity: 1; }
-    100% { width: 100%; opacity: 0; }
-}
+.wallpaper-thumb:hover, .wallpaper-thumb.selected { border-color: #007bff; }
