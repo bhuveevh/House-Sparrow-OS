@@ -7,35 +7,25 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Desktop and Icons Container -->
+    <!-- The main desktop background and icon area -->
     <div id="desktop">
         <div id="icons-container">
             <!-- Icons will be dynamically inserted here by JavaScript -->
         </div>
     </div>
+    
+    <!-- A container to hold all created application windows -->
+    <div id="window-container"></div>
+    
+    <!-- A visual preview element for the window tiling/snapping feature -->
+    <div id="tiling-preview"></div>
 
-    <!-- macOS-style Dock -->
+    <!-- The macOS-style Dock at the bottom -->
     <div id="dock">
         <span id="os-name-trigger" class="gradient-text">House Sparrow OS</span>
     </div>
 
-    <!-- Website Popup Window -->
-    <div id="popup-modal" class="modal hidden">
-        <div class="popup-header">
-            <span id="popup-title">Browser</span>
-            <div class="loading-bar"></div>
-            <div class="window-controls">
-                <button class="control-btn" id="minimize-btn" title="Minimize">-</button>
-                <button class="control-btn" id="maximize-btn" title="Maximize">□</button>
-                <button class="control-btn" id="close-popup" title="Close">×</button>
-            </div>
-        </div>
-        <div class="popup-content">
-            <iframe id="popup-iframe" src="" frameborder="0" allow="fullscreen"></iframe>
-        </div>
-    </div>
-
-    <!-- Settings Popup Window -->
+    <!-- The Settings window (a single instance) -->
     <div id="settings-modal" class="modal hidden">
         <div class="popup-header" id="settings-header">
             <span>Settings</span>
@@ -67,6 +57,7 @@
         </div>
     </div>
 
+    <!-- Link to the JavaScript file -->
     <script src="script.js"></script>
 </body>
 </html>
