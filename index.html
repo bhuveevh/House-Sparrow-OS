@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Sparrow OS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Desktop and Icons Container -->
+    <div id="desktop">
+        <div id="icons-container">
+            <!-- Icons will be dynamically inserted here by JavaScript -->
+        </div>
+    </div>
+
+    <!-- macOS-style Dock -->
+    <div id="dock">
+        <span id="os-name-trigger" class="gradient-text">House Sparrow OS</span>
+    </div>
+
+    <!-- Website Popup Window -->
+    <div id="popup-modal" class="modal hidden">
+        <div class="popup-header">
+            <span id="popup-title">Browser</span>
+            <div class="loading-bar"></div>
+            <div class="window-controls">
+                <button class="control-btn" id="minimize-btn" title="Minimize">-</button>
+                <button class="control-btn" id="maximize-btn" title="Maximize">□</button>
+                <button class="control-btn" id="close-popup" title="Close">×</button>
+            </div>
+        </div>
+        <div class="popup-content">
+            <iframe id="popup-iframe" src="" frameborder="0" allow="fullscreen"></iframe>
+        </div>
+    </div>
+
+    <!-- Settings Popup Window -->
+    <div id="settings-modal" class="modal hidden">
+        <div class="popup-header" id="settings-header">
+            <span>Settings</span>
+            <div class="window-controls">
+                <button id="close-settings" class="control-btn" title="Close">×</button>
+            </div>
+        </div>
+        <div class="settings-content">
+            <h4>Change Wallpaper</h4>
+            <div id="wallpaper-options">
+                <!-- Wallpaper thumbnails will be inserted here -->
+            </div>
+            <label for="wallpaper-upload">Or upload from computer:</label>
+            <input type="file" id="wallpaper-upload" accept="image/*">
+            
+            <hr>
+            <h4>Add New Site</h4>
+            <form id="add-site-form">
+                <input type="text" id="site-name" placeholder="Site Name (e.g., Google)" required>
+                <input type="url" id="site-url" placeholder="Site URL" required>
+                <input type="url" id="icon-url" placeholder="Icon URL (optional)">
+                <label for="icon-upload">Or upload icon from computer:</label>
+                <input type="file" id="icon-upload" accept="image/*">
+                <button type="submit">Add Site</button>
+            </form>
+            <hr>
+            <h4>Remove a Site</h4>
+            <p>Right-click on any icon on the desktop to remove it.</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
